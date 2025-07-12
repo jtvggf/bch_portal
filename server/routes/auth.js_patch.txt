@@ -1,0 +1,35 @@
+
+// Registration (updated to save name & username)
+router.post('/register', async (req, res) => {
+  const { email, password, name, username } = req.body;
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await User.create({ email, passwordHash, name, username });
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '7d' });
+    res.json({ token, user: { email: user.email, role: user.role, name: user.name, username: user.username, employeeRole: user.employeeRole } });
+  } catch (err) {
+    res.status(500).json({ message: 'Registration error' });
+  }
+});
+
+// Promote/update role or employeeRole
+router.post('/promote', verifyToken, async (req, res) => {
+  const { targetEmail, newRole, newEmployeeRole } = req.body;
+  try {
+    const requester = await User.findById(req.user.userId);
+    if (!requester || requester.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admins can promote users' });
+    }
+
+    const targetUser = await User.findOne({ email: targetEmail });
+    if (!targetUser) return res.status(404).json({ message: 'User not found' });
+
+    if (newRole) targetUser.role = newRole;
+    if (Array.isArray(newEmployeeRole)) targetUser.employeeRole = newEmployeeRole;
+
+    await targetUser.save();
+    res.json({ message: `${targetEmail} updated` });
+  } catch (err) {
+    res.status(500).json({ message: 'Promotion update error' });
+  }
+});
