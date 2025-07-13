@@ -24,7 +24,7 @@ const Navbar = () => {
             <div className="absolute left-0 bg-white text-black mt-2 w-48 rounded shadow z-10">
               <Link to="/stocktake" onClick={closeAll} className="block px-4 py-2 hover:bg-gray-200">Stocktake</Link>
               <Link to="/definitions" onClick={closeAll} className="block px-4 py-2 hover:bg-gray-200">Inventory Definitions</Link>
-              <Link to="/edit" onClick={closeAll} className="block px-4 py-2 hover:bg-gray-200">Configure Storage</Link>
+              <Link to="/configurestorage" onClick={closeAll} className="block px-4 py-2 hover:bg-gray-200">Configure Storage</Link>
             </div>
           )}
         </div>

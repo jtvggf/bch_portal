@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const EditPage = () => {
+const ConfigureStoragePage = () => {
   const [areas, setAreas] = useState([]);
   const [containers, setContainers] = useState([]);
   const [groups, setGroups] = useState([]);
@@ -220,8 +220,23 @@ const EditPage = () => {
       </div>
 
       {/* Grouped Items */}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="flex gap-4 mt-4">
+        {/* Left: Add Item */}
+        <div className="w-1/3 bg-white border rounded shadow p-4">
+          <h2 className="font-bold mb-2 text-sm">Add Item to Selected Group</h2>
+          <div className="flex flex-col gap-2">
+            <input value={newItemName} onChange={e => setNewItemName(e.target.value)} className="border p-2 text-sm w-full rounded" placeholder="Item name" />
+            <select value={newItemType} onChange={e => setNewItemType(e.target.value)} className="border p-2 text-sm w-full rounded">
+              <option value="Unit">Unit</option>
+              <option value="Case">Case</option>
+              <option value="Pack">Pack</option>
+            </select>
+            <button onClick={() => addEntry('item')} className="bg-blue-700 text-white py-2 rounded text-sm mt-2">Add Item</button>
+          </div>
+        </div>
+
+        {/* Right: Grouped items */}
+        <div className="flex-1 grid grid-cols-2 gap-4">
           {groupedItems.map(({ group, items }) => (
             <Droppable droppableId={group._id} key={group._id}>
               {(provided) => (
@@ -270,9 +285,10 @@ const EditPage = () => {
             </Droppable>
           ))}
         </div>
-      </DragDropContext>
+      </div>
+
     </div>
   );
 };
 
-export default EditPage;
+export default ConfigureStoragePage;

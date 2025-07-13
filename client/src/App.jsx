@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 
 import LoginPage from './pages/LoginPage';
 
-import EditPage from './pages/EditPage';
+import ConfigureStoragePage from './pages/ConfigureStoragePage';
 import StocktakePage from './pages/StocktakePage';
 import ItemDefinitionsPage from './pages/ItemDefinitionsPage';
 
@@ -45,7 +45,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/stocktake" element={<StocktakePage />} />
-          <Route path="/edit" element={<EditPage />} />
+          <Route path="/configurestorage" element={<ConfigureStoragePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/definitions" element={<ItemDefinitionsPage />} />
           <Route path="/admin/users" element={<AdminUserPage />} />
